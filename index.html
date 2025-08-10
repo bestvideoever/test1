@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Anonymous Chat App – No Login Needed | OnlineWebChat</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- Landing Page -->
+<section id="landing">
+  <h1 class="typing-text" id="typingHeading"></h1>
+  <div class="button-container">
+    <p class="note">No Gmail or number needed. Just tap Create Account, enter Nickname, and start chatting.</p>
+    <button onclick="showNicknamePage()">Create Account</button>
+    <p style="color: #fff;">or</p>
+    <button onclick="showLoginPage()">Already Have Account</button>
+  </div>
+</section>
+
+<!-- Nickname Page -->
+<section id="nicknamePage" style="display:none;">
+  <h2>Enter your Nickname</h2>
+  <input type="text" id="nicknameInput" placeholder="Nickname" autocomplete="off" />
+  <button onclick="generateUserId()">Done</button>
+  <div id="loading" style="display:none;">⏳ Wait, your ID is generating...</div>
+  <div id="generatedDetails" style="display:none;">
+    <h3>Your ID - Remember it</h3>
+    <input type="text" id="generatedId" readonly />
+    <h3>Create Password</h3>
+    <input type="password" id="createPassword" placeholder="Password" autocomplete="new-password" />
+    <button onclick="finalizeAccount()">Done</button>
+  </div>
+  <button onclick="showLanding()" style="margin-top:30px; background:#888;">Back</button>
+</section>
+
+<!-- Success Page -->
+<section id="successPage" style="display:none;">
+  <div class="tick">✅</div>
+  <h2>Your ID is Created</h2>
+  <button onclick="showLoginPage()">Now Login</button>
+</section>
+
+<!-- Login Page -->
+<section id="loginPage" style="display:none;">
+  <h2>Login Your Account</h2>
+  <input type="text" id="loginId" placeholder="Enter your ID" autocomplete="off" />
+  <input type="password" id="loginPassword" placeholder="Enter your Password" autocomplete="current-password" />
+  <button onclick="loginUser()">Login</button>
+  <p class="note">Note: If you forget your ID/password, just create a new one. No Gmail needed.</p>
+  <button onclick="showLanding()" style="margin-top:30px; background:#888;">Back</button>
+</section>
+
+<!-- Chat Page -->
+<section id="chatPage" style="display:none;">
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: #c6a87d; color: white; font-weight: bold; border-radius: 8px; max-width: 640px; margin: 0 auto;">
+    <div style="font-size: 20px;">Your Friend</div>
+    <button onclick="toggleAddFriendSection()" style="background: #6f4e37; color: white; border: none; padding: 6px 12px; border-radius: 4px;">Add</button>
+  </div>
+
+  <div id="addFriendSection" style="display:none; text-align: center; margin-top: 10px;">
+    <input type="text" id="searchFriendId" placeholder="Enter Friend ID" autocomplete="off" />
+    <button onclick="addFriend()">Add</button>
+  </div>
+
+  <div id="friendList" style="margin-top: 20px;"></div>
+
+  <div id="chatView" style="display:none; max-width: 640px; margin: 20px auto;">
+    <div style="display:flex; justify-content: space-between; align-items: center; background: #a9746e; padding: 10px; color: white; border-radius: 6px;">
+      <button onclick="backToFriendList()" style="background: #6f4e37; border: none; color: white; padding: 5px 10px; border-radius: 4px;">← Back</button>
+      <div id="chatWith" style="flex: 1; text-align: center;"></div>
+    </div>
+
+    <!-- call bar -->
+    <div class="call-bar" id="callBar">
+      <div class="call-half" id="audioCallHalf" title="Audio call">
+        <span class="call-icon">📞</span><span>Audio</span>
+      </div>
+      <div class="call-half" id="videoCallHalf" title="Video call">
+        <span class="call-icon">📹</span><span>Video</span>
+      </div>
+    </div>
+
+    <!-- preview -->
+    <div id="callPreview">
+      <video id="callPreviewVideoLocal" autoplay muted playsinline></video>
+      <video id="callPreviewVideoRemote" autoplay playsinline></video>
+      <audio id="callPreviewAudioLocal" autoplay muted></audio>
+      <audio id="callPreviewAudioRemote" autoplay></audio>
+      <div class="hang-btn" id="hangupCallBtn" title="Hang up" style="display:none;">✕</div>
+    </div>
+
+    <div id="chatMessages"></div>
+    <input type="text" id="messageInput" placeholder="Type your message..." autocomplete="off" />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</section>
+
+<!-- Incoming Call Modal -->
+<div id="incomingModal">
+  <div id="incomingText">Incoming call...</div>
+  <div style="margin-top:10px;">
+    <button id="acceptCallBtn" style="background:#2e8b57">Accept</button>
+    <button id="rejectCallBtn" style="background:#b83b3b">Reject</button>
+  </div>
+</div>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
